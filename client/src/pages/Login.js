@@ -20,7 +20,7 @@ export default function Login() {
       console.log(loggedInUser);
       if (loggedInUser) {
         setUser(loggedInUser);
-        history.push("/home");
+        history.push("/");
         } else {
           setLoginError(true);
         }

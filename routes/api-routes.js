@@ -52,7 +52,12 @@ module.exports = function(app) {
     }
   });
 
-  app.get("/api/isAuthenticated", isAuthenticated, (req, res) => {
-      res.send(true);
+  app.get("/api/isAuthenticated", (req, res) => {
+    if (req.user){
+       res.status(200).send(true);
+      }
+    else {
+      res.status(401).send(false);
+    }
   });
 };

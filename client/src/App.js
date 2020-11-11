@@ -1,37 +1,44 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import UserContext from "./utils/UserContext";
-import PrivateRoute from "./components/PrivateRoute";
 import axios from "axios";
+import PrivateRoute from "./components/PrivateRoute";
+import isAuthenticatedContext from "./utils/isAuthenticatedContext";
 
 function App() {
-
   const [user, setUser] = useState(null);
-
-  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
+  const [isUserAuthenticated, setUserIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    async function isLoggedIn() {
-      const response = await axios.get('/api/user_data'); 
-      if (response.data.email){
+    const getUser = async () => {
+      const response = await axios.get("/api/user_data");
+      if (response.data.email) {
+        setUserIsAuthenticated(true);
         setUser(response.data);
-        console.log(response.data);
+      } else {
+        setUserIsAuthenticated(false);
       }
-    }
-    isLoggedIn();
-}, []);
+    };
+    getUser();
+  }, []);
 
   return (
-            <Router>
-            <UserContext.Provider value={value}>
-            <Switch>
-            <Route path="/login" component={Login} />
-            <PrivateRoute exact={true} path="/" component={Home} isAuthenticated={user} />
-            </Switch>
-            </UserContext.Provider>
-            </Router>
+    <Router>
+      <isAuthenticatedContext.Provider
+        value={{ isUserAuthenticated, setUserIsAuthenticated }}
+      >
+        <Switch>
+          <Route path="/login" component={Login} />
+          <PrivateRoute
+            isAuthenticated={isUserAuthenticated}
+            exact
+            path="/"
+            component={Home}
+          />
+        </Switch>
+      </isAuthenticatedContext.Provider>
+    </Router>
   );
 }
 

@@ -37,6 +37,11 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: false
         }
       });
+      Offences.belongsTo(models.EnforcementUnit, {
+        foreignKey: {
+          allowNull: false
+        }
+      });
     };
     return Offences;
   };

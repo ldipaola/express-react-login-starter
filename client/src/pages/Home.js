@@ -22,26 +22,20 @@ export default function Home() {
 
   return (
     <div>
-        <Row>
-          <Col>
-            <ListGroup variant="flush">
-              <ListGroup.Item style={{color: "#AFAFAF", border: "none"}}>Data Entry</ListGroup.Item>
-              <ListGroup.Item style={{color: "#AFAFAF", border: "none"}}>Reports</ListGroup.Item>
-              <ListGroup.Item style={{color: "#AFAFAF", border: "none"}}>TMU - Data Entry</ListGroup.Item>
-              <ListGroup.Item style={{color: "#AFAFAF", border: "none"}}>RNS - Data Entry</ListGroup.Item>
-              <ListGroup.Item style={{color: "#AFAFAF", border: "none"}}>Unit Email</ListGroup.Item>
-            </ListGroup>
-          </Col>
-          <Col>
-            <Button
-              type="submit"
-              className="btn btn-default float-right"
-              onClick={handleClick}
-            >
-              Logout
-            </Button>
-          </Col>
-        </Row>
+        <Container fluid>
+          <Row>
+            <Col className="d-flex justify-content-center">
+              <p className="p-1">Welcome User!</p>
+              <Button
+                type="submit"
+                className="btn btn-default"
+                onClick={handleClick}
+              >
+                Logout
+              </Button>
+            </Col>
+          </Row>
+        </Container>
     </div>
   );
 }
